@@ -344,4 +344,4 @@ class TrainingTask(LightningModule):
 
     def info(self, string):
         if self.local_rank < 1:
-            logging.info(string)
+            logging.getLogger('NanoDet').info(string)

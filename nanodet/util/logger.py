@@ -41,7 +41,8 @@ class Logger:
         console.setLevel(logging.INFO)
         formatter = logging.Formatter(fmt, datefmt="%m-%d %H:%M:%S")
         console.setFormatter(formatter)
-        logging.getLogger().addHandler(console)
+        self.logger = logging.getLogger(name='NanoDet')
+        self.logger.addHandler(console)
         if use_tensorboard:
             try:
                 from torch.utils.tensorboard import SummaryWriter
@@ -52,14 +53,14 @@ class Logger:
                     "(applicable to PyTorch 1.1 or higher)"
                 )
             if self.rank < 1:
-                logging.info(
+                self.logger.info(
                     "Using Tensorboard, logs will be saved in {}".format(self.log_dir)
                 )
                 self.writer = SummaryWriter(log_dir=self.log_dir)
 
     def log(self, string):
         if self.rank < 1:
-            logging.info(string)
+            self.logger.info(string)
 
     def scalar_summary(self, tag, phase, value, step):
         if self.rank < 1:
