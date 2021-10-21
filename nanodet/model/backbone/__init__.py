@@ -17,6 +17,7 @@ import copy
 from .custom_csp import CustomCspNet
 from .efficientnet_lite import EfficientNetLite
 from .ghostnet import GhostNet
+from .mmdet_backbone import build_mmdet_backbone
 from .mobilenetv2 import MobileNetV2
 from .repvgg import RepVGG
 from .resnet import ResNet
@@ -40,5 +41,7 @@ def build_backbone(cfg):
         return CustomCspNet(**backbone_cfg)
     elif name == "RepVGG":
         return RepVGG(**backbone_cfg)
+    elif name == "MMDetectionBackbone":
+        return build_mmdet_backbone(backbone_cfg)
     else:
         raise NotImplementedError
